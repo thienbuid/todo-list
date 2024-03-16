@@ -77,7 +77,7 @@ const Home = () => {
       <div className={styles.container}>
         <div className={styles.header}>
           <span className={styles.title}>TODO LIST - SKY MAVIS</span>
-          <span className={styles.sub_title}>Todo list application</span>
+          <span className={styles.sub_title}>TODO LIST APPLICATION</span>
         </div>
         <form
           onSubmit={(e) => {
