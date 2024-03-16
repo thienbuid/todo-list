@@ -1,0 +1,105 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3rem;
+  padding: 60px;
+
+  .header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .add_todo_container {
+    display: flex;
+    background-color: #141619;
+    padding: 10px;
+    width: 30%;
+    border-radius: 4px;
+    gap: 1rem;
+
+    span {
+      font-size: 1rem;
+    }
+  }
+
+  @media screen and (max-width: 1200px) {
+    .add_todo_container {
+      width: 100%;
+    }
+  }
+
+  .box_add_todo {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    input {
+      width: 100%;
+      padding: 4px;
+      font-size: 16px;
+      outline: none;
+      border: none;
+    }
+  }
+
+  .title {
+    font-size: 38px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .sub_title {
+    font-size: 16px;
+  }
+
+  .body {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 4rem;
+  }
+
+  @media screen and (max-width: 1200px) {
+    .body {
+      gap: 1rem;
+      grid-template-columns: 1fr; /* Chỉ có 1 cột khi width dưới 1200px */
+    }
+  }
+
+  .box {
+    border-radius: 8px;
+    background-color: #141619;
+    width: 100%;
+    flex: 1;
+
+    .box_header {
+      display: flex;
+      justify-content: space-between;
+      border-radius: 8px 8px 0 0;
+      background-color: #1b1d21;
+      padding: 10px 20px;
+      font-weight: 600;
+    }
+
+    .list_todo {
+      padding: 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .container {
+    padding: 24px;
+  }
+}

@@ -1,0 +1,110 @@
+.tag {
+  padding: 10px;
+  border-radius: 6px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.todo {
+  background-color: rgb(69, 59, 128);
+}
+
+.inprogress {
+  background-color: rgb(128, 120, 59);
+}
+
+.completed {
+  background-color: rgb(59, 128, 65);
+}
+
+.content {
+  flex: 1;
+  font-size: 16px;
+}
+
+.action_container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.button_options {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 4px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #393939;
+  }
+}
+
+.option_container {
+  position: relative;
+  user-select: none;
+}
+
+.option {
+  border: 1px #ccc solid;
+  z-index: 999;
+  background-color: white;
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  color: black;
+  top: 40px;
+  right: 2px;
+  width: 180px;
+  position: absolute;
+  border-radius: 4px;
+
+  span {
+    font-size: 12px;
+  }
+
+  .option_item {
+    padding: 10px 20px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    &:hover {
+      cursor: pointer;
+      background-color: #ccc;
+    }
+  }
+}
+
+.add_todo_container {
+  display: flex;
+  width: 100%;
+  border-radius: 4px;
+  gap: 1rem;
+
+  span {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .add_todo_container {
+    width: 100%;
+  }
+}
+
+.box_add_todo {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  input {
+    width: 100%;
+    font-size: 16px;
+    outline: none;
+    border: none;
+  }
+}
