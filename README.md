@@ -1,4 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Todo List App
+
+### Introduction
+
+Todo List App is a simple web application built to manage daily tasks. The app allows you to add, edit,
+delete tasks, and change their status from "Not Started" to "In Progress" and finally to "Completed".
+You can also drag and drop tasks between stages.
+
+### Features
+
+- Add Note: You can add a new note by entering the content into the input field and clicking the "Add" button.
+- Edit Note: You can edit a note by clicking on the note you want to edit, making changes, and then clicking "Save".
+- Change Status: You can change the status of a task from "Not Started" to "In Progress" by dragging and dropping the task into the corresponding list or by clicking on the task and selecting a new status from the dropdown menu.
+- Delete Note: You can delete a note by clicking on the delete icon or the "Delete" button.
+- Drag and Drop Notes: You can drag and drop notes between the "Not Started", "In Progress", and "Completed" stages.
+
+### Technologies Used
+
+- NextJS: Typescript library for building user interfaces.
+- SCSS: Advanced CSS preprocessor for managing the styling of the application.
+- React Beautiful DND: React library for drag and drop functionality.
+
+### Demo application
+
+- https://todo-list-eight-red.vercel.app/
 
 ## Getting Started
 
