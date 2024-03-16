@@ -4,6 +4,12 @@ export enum STATUS_TODO {
   "COMPLETED",
 }
 
+export const KEY_DROPABLE_ID = {
+  compeleted: "COMPELETED",
+  todo: "TODO",
+  inprogress: "INPROGRESS",
+};
+
 export default interface ToDo {
   id: string;
   content: string;

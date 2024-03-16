@@ -70,7 +70,7 @@
   @media screen and (max-width: 1200px) {
     .body {
       gap: 1rem;
-      grid-template-columns: 1fr; /* Chỉ có 1 cột khi width dưới 1200px */
+      grid-template-columns: 1fr;
     }
   }
 
@@ -78,6 +78,7 @@
     border-radius: 8px;
     background-color: #141619;
     width: 100%;
+    min-height: 50vh;
     flex: 1;
 
     .box_header {

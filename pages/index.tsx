@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import styles from "@/styles/home.module.scss";
 import TodoItem from "@/components/TagNote/todo-item";
-import ToDo, { STATUS_TODO } from "@/interfaces/todo.interface";
+import ToDo, {
+  KEY_DROPABLE_ID,
+  STATUS_TODO,
+} from "@/interfaces/todo.interface";
 import Button from "@/components/Button/button";
 import { BiAddToQueue, BiSolidTrash, BiTrash } from "react-icons/bi";
 import { useTodo } from "@/store/useTodo";
@@ -22,7 +26,7 @@ const Home = () => {
       progress: undefined,
       theme: "light",
     });
-  const { todos, addTodo, removeTodosByStatus } = useTodo();
+  const { todos, addTodo, removeTodosByStatus, updateTodo } = useTodo();
 
   const handleAddTodo = () => {
     if (newTodo !== "") {
@@ -37,6 +41,31 @@ const Home = () => {
     } else {
       notifyNoContent();
     }
+  };
+
+  const handleDragEnd = (result: any) => {
+    if (!result.destination) return;
+    const items = Array.from(todos);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    const todoDrop = items.find((todo) => todo.id === result.draggableId);
+
+    if (!todoDrop) return;
+
+    let statusTodo = todoDrop?.status;
+    switch (result.destination.droppableId) {
+      case KEY_DROPABLE_ID.compeleted:
+        statusTodo = STATUS_TODO.COMPLETED;
+        break;
+      case KEY_DROPABLE_ID.inprogress:
+        statusTodo = STATUS_TODO.INPROGRESS;
+        break;
+      case KEY_DROPABLE_ID.todo:
+        statusTodo = STATUS_TODO.TODO;
+        break;
+    }
+    updateTodo({ ...todoDrop, status: statusTodo });
   };
 
   return (
@@ -71,58 +100,120 @@ const Home = () => {
           </Button>
         </form>
         <div className={styles.body}>
-          <div>
-            <div className={styles.box}>
-              <div className={styles.box_header}>
-                <span>TO-DO</span>
-              </div>
-              <div className={styles.list_todo}>
-                {todos
-                  .filter((todo) => todo.status === STATUS_TODO.TODO)
-                  .map((todo) => {
-                    return <TodoItem key={todo.id} todo={todo} />;
-                  })}
-              </div>
-            </div>
-          </div>
-          <div>
-            <div className={styles.box}>
-              <div className={styles.box_header}>
-                <span>IN PROGRESS</span>
-              </div>
-              <div className={styles.list_todo}>
-                {todos
-                  .filter((todo) => todo.status === STATUS_TODO.INPROGRESS)
-                  .map((todo) => {
-                    return <TodoItem key={todo.id} todo={todo} />;
-                  })}
-              </div>
-            </div>
-          </div>
-          <div>
-            <div className={styles.box}>
-              <div className={styles.box_header}>
-                <span>COMPLETED</span>
-                <Button
-                  onClick={() => {
-                    removeTodosByStatus(STATUS_TODO.COMPLETED);
-                  }}
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable droppableId={KEY_DROPABLE_ID.todo}>
+              {(provided) => (
+                <div
+                  className={styles.box}
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
                 >
-                  <BiTrash fontSize={28} />{" "}
-                  <span style={{ display: "inline-block", width: "100%" }}>
-                    CLEAR
-                  </span>
-                </Button>
-              </div>
-              <div className={styles.list_todo}>
-                {todos
-                  .filter((todo) => todo.status === STATUS_TODO.COMPLETED)
-                  .map((todo) => {
-                    return <TodoItem key={todo.id} todo={todo} />;
-                  })}
-              </div>
-            </div>
-          </div>
+                  <div className={styles.box_header}>
+                    <span>TO-DO</span>
+                  </div>
+                  <div className={styles.list_todo}>
+                    {todos
+                      .filter((todo) => todo.status === STATUS_TODO.TODO)
+                      .map((todo, index) => (
+                        <Draggable
+                          key={todo.id}
+                          draggableId={todo.id}
+                          index={index}
+                        >
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                            >
+                              <TodoItem todo={todo} />
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                  </div>
+                </div>
+              )}
+            </Droppable>
+            <Droppable droppableId={KEY_DROPABLE_ID.inprogress}>
+              {(provided) => (
+                <div
+                  className={styles.box}
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  <div className={styles.box_header}>
+                    <span>IN PROGRESS</span>
+                  </div>
+                  <div className={styles.list_todo}>
+                    {todos
+                      .filter((todo) => todo.status === STATUS_TODO.INPROGRESS)
+                      .map((todo, index) => (
+                        <Draggable
+                          key={todo.id}
+                          draggableId={todo.id}
+                          index={index}
+                        >
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                            >
+                              <TodoItem todo={todo} />
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                  </div>
+                </div>
+              )}
+            </Droppable>
+            <Droppable droppableId={KEY_DROPABLE_ID.compeleted}>
+              {(provided) => (
+                <div
+                  className={styles.box}
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  <div className={styles.box_header}>
+                    <span>COMPLETED</span>
+                    <Button
+                      onClick={() => {
+                        removeTodosByStatus(STATUS_TODO.COMPLETED);
+                      }}
+                    >
+                      <BiTrash fontSize={28} />{" "}
+                      <span style={{ display: "inline-block", width: "100%" }}>
+                        CLEAR
+                      </span>
+                    </Button>
+                  </div>
+                  <div className={styles.list_todo}>
+                    {todos
+                      .filter((todo) => todo.status === STATUS_TODO.COMPLETED)
+                      .map((todo, index) => (
+                        <Draggable
+                          key={todo.id}
+                          draggableId={todo.id}
+                          index={index}
+                        >
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                            >
+                              <TodoItem todo={todo} />
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                  </div>
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
         </div>
       </div>
     </>
